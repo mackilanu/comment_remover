@@ -40,20 +40,27 @@ void read_file(char name[])
         perror("Could not open file!\n");
     
     int num_slashes = 0;
+    int num_chars_before_comment = 0;
     while((c = getc(fp)) != EOF) {
-        
+       // printf("Char: %c\nNum chars before: %d\n", c, num_chars_before_comment);
         if(c == '/') {
             num_slashes++;
-            if(num_slashes == 2) {
-                
+            
+        } else if(c == '*') {
+            if(num_slashes == 1) {
+                num_slashes++;
             }
-        } else if(num_slashes == 2){
-            if(c == '\n')
+            
+        } else {
+            if(num_slashes !=  2) {
                 num_slashes = 0;
-        }else {
-            putchar(c);
+                num_chars_before_comment++;
+                putchar(c);
+            
+            } else if(c == '\n') {
+                num_slashes = 0;
+            }
         }
-
     }
 
     fclose(fp);
