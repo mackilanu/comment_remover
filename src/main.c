@@ -42,14 +42,12 @@ void read_file(char name[])
     int num_slashes = 0;
     int num_chars_before_comment = 0;
     while((c = getc(fp)) != EOF) {
-       // printf("Char: %c\nNum chars before: %d\n", c, num_chars_before_comment);
         if(c == '/') {
             num_slashes++;
             
         } else if(c == '*') {
-            if(num_slashes == 1) {
-                num_slashes++;
-            }
+        
+            num_slashes++;
             
         } else {
             if(num_slashes !=  2) {
